@@ -20,5 +20,5 @@ injuries_non_incapacitating: The number of non-incapacitating injuries.
 injuries_reported_not_evident: The number of injuries reported but not visibly evident.
 injuries_no_indication: The number of cases with no indication of injury.
 crash_hour: The hour the accident occurred.
-crash_day_of_week: The day of the week the accident occurred.
+crash_day_of_week: The day of the week the accident occurred. Domingo = 1, Sábado = 7
 crash_month: The month the accident occurred.
