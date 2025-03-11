@@ -7,31 +7,30 @@ from pickle import load
 #carga el modelo
 model = load(open("../src/model_classifier.sav", "rb"))
 
-# Ruta de la imagen de fondo
-image_path = "../src/bg2.jpg"
-
-# Código HTML y CSS para agregar la imagen de fondo
-st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background-image: url("{image_path}");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        height: 100vh;
-    }}
-    </style>
-    """, 
-    unsafe_allow_html=True
-)
-
-
 st.set_page_config(page_title="Predictor de Accidentes de Tráfico", page_icon=":oncoming_automobile:", layout="wide")
+
+page_element="""
+<style>
+[data-testid="stAppViewContainer"]{
+  background-image: url("https://www.mapfre.com.mx/media/545x257_087_autoTurista_noticias_carrilRapido.jpg");
+  background-size: cover;
+}
+.my-container {
+    background-color: #f0f2f6;
+    padding: 20px;
+    border-radius: 5px;
+}
+</style>
+"""
+
+st.markdown(page_element, unsafe_allow_html=True)
 
 with st.container():
     st.title(":blue_car: Predictor de Lesiones en Accidentes de Tráfico :car:")
+    st.markdown('<div class="my-container">', unsafe_allow_html=True)
+    
     st.write("Esta aplicación permite predecir la gravedad de las heridas en un accidente de tráfico.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with st.container():
     st.write("Fecha: ")
