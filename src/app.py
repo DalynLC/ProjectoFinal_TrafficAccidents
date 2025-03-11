@@ -26,13 +26,15 @@ with st.container():
     st.write("Fecha: ")
     st.write("Hora: ")
     st.subheader("🔍 Ingresa las condiciones del accidente")
-    col1 = st.columns(1)[0]
+    col1, col2 = st.columns(2)
     with col1:
         traffic_control_device = st.selectbox('Select Traffic Device',['TRAFFIC SIGNAL','STOP SIGN/FLASHER','NO CONTROLS','UNKNOW','OTHER'])
         weather_condition = st.selectbox('Select weather',['CLEAR','RAIN','CLOUDY/OVERCAST','SNOW','UNKNOWN'])
         alignment = st.selectbox('Select alignment',['STRAIGHT AND LEVEL','STRAIGHT ON GRADE','CURVE, LEVEL','STRAIGHT ON HILLCREST','CURVE ON GRADE'])
         roadway_surface_cond = st.selectbox('Roadway Surface Condition',['DRY','WET','UNKNOWN','SNOW OR SLUSH','ICE'])
         road_defect = st.selectbox('Roadway Defect',['NO DEFECTS','UNKNOWN','WORN SURFACE','OTHER','RUT, HOLES'])
+
+    with col2:
         crash_type = st.selectbox('Crash Type',['NO INJURY / DRIVE AWAY','INJURY AND / OR TOW DUE TO CRASH'])
         intersection_related_i = st.selectbox('Intersection related',['TRUE','FALSE'])
         prim_contributory_cause = st.selectbox('Primary Contributory Cause',['UNABLE TO DETERMINE','FAILING TO YIELD RIGHT-OF-WAY','FOLLOWING TOO CLOSELY','DISREGARDING TRAFFIC SIGNALS','IMPROPER TURNING/NO SIGNAL'])
