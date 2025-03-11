@@ -17,3 +17,5 @@ kaggle>=1.6.17
 kagglehub>=0.3.10
 streamlit>=1.43.1
 streamlit_lottie
+imblearn>=3.5.0
+dotenv>=0.9.9
