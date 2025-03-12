@@ -3,7 +3,9 @@ from streamlit_lottie import st_lottie
 import datetime as dt
 import numpy as np
 from pickle import load
+from sklearn.preprocessing import MinMaxScaler
 
+scaler = MinMaxScaler()
 #carga el modelo
 #model = load(open("../src/model_classifier.sav", "rb"))
 
@@ -34,6 +36,13 @@ with st.container():
 
 days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"] 
 month = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+tcd = ['TRAFFIC SIGNAL', 'NO CONTROLS', 'STOP SIGN/FLASHER', 'UNKNOWN', 'OTHER', 'PEDESTRIAN CROSSING SIGN', 'OTHER WARNING SIGN', 'YIELD', 'FLASHING CONTROL SIGNAL', 'LANE USE MARKING', 'OTHER REG. SIGN', 'DELINEATORS', 'SCHOOL ZONE', 'POLICE/FLAGMAN', 'NO PASSING', 'RR CROSSING SIGN', 'RAILROAD CROSSING GATE', 'BICYCLE CROSSING SIGN', 'OTHER RAILROAD CROSSING']
+wc = ['CLEAR', 'RAIN', 'SNOW', 'CLOUDY/OVERCAST', 'UNKNOWN', 'FOG/SMOKE/HAZE', 'BLOWING SNOW', 'FREEZING RAIN/DRIZZLE', 'OTHER', 'SLEET/HAIL', 'SEVERE CROSS WIND GATE', 'BLOWING SAND, SOIL, DIRT']
+fct = ['TURNING', 'REAR END', 'ANGLE', 'FIXED OBJECT', 'REAR TO FRONT', 'SIDESWIPE SAME DIRECTION', 'SIDESWIPE OPPOSITE DIRECTION', 'PEDALCYCLIST', 'PEDESTRIAN', 'HEAD ON', 'PARKED MOTOR VEHICLE', 'OTHER NONCOLLISION', 'OVERTURNED', 'OTHER OBJECT', 'REAR TO SIDE', 'ANIMAL', 'TRAIN', 'REAR TO REAR']
+rsc = ['UNKNOWN', 'DRY', 'WET', 'SNOW OR SLUSH', 'ICE', 'OTHER', 'SAND, MUD, DIRT']
+rd = ['UNKNOWN', 'NO DEFECTS', 'OTHER', 'SHOULDER DEFECT', 'WORN SURFACE', 'DEBRIS ON ROADWAY', 'RUT, HOLES']
+ir = ['TRUE','FALSE']
+
 
 fecha = dt.date.today()
 dDay = days[fecha.weekday()] 
@@ -55,24 +64,25 @@ with st.container(border=True):
     st.subheader("🔍 Ingresa las condiciones del accidente")
     col1, col2 = st.columns(2)
     with col1:
-        traffic_control_device = st.selectbox('Select Traffic Device',['TRAFFIC SIGNAL','STOP SIGN/FLASHER','NO CONTROLS','UNKNOW','OTHER'])
-        weather_condition = st.selectbox('Select weather',['CLEAR','RAIN','CLOUDY/OVERCAST','SNOW','UNKNOWN'])
-        alignment = st.selectbox('Select alignment',['STRAIGHT AND LEVEL','STRAIGHT ON GRADE','CURVE, LEVEL','STRAIGHT ON HILLCREST','CURVE ON GRADE'])
-        roadway_surface_cond = st.selectbox('Roadway Surface Condition',['DRY','WET','UNKNOWN','SNOW OR SLUSH','ICE'])
-        road_defect = st.selectbox('Roadway Defect',['NO DEFECTS','UNKNOWN','WORN SURFACE','OTHER','RUT, HOLES'])
-
+        traffic_control_device = st.selectbox('Select Traffic Device',tcd)
+        weather_condition = st.selectbox('Select weather',wc)
+        first_crash_type = st.selectbox('Select first crash type',fct)
+        roadway_surface_cond = st.selectbox('Roadway Surface Condition',rsc)
+        
     with col2:
-        crash_type = st.selectbox('Crash Type',['NO INJURY / DRIVE AWAY','INJURY AND / OR TOW DUE TO CRASH'])
-        intersection_related_i = st.selectbox('Intersection related',['TRUE','FALSE'])
-        prim_contributory_cause = st.selectbox('Primary Contributory Cause',['UNABLE TO DETERMINE','FAILING TO YIELD RIGHT-OF-WAY','FOLLOWING TOO CLOSELY','DISREGARDING TRAFFIC SIGNALS','IMPROPER TURNING/NO SIGNAL'])
+        road_defect = st.selectbox('Roadway Defect',rd)
+        intersection_related_i = st.selectbox('Intersection related',ir)
         num_units = st.slider("Number Units",1,11)
-        total_fatal_injuries = st.slider('Fatal Injuries',0,10)
         total_non_fatal_injuries= st.slider('Non Fatal Injuries',0,21)
 
 with st.container(border=True):
-    st.markdown("---")
-    if st.button("✨ Predict Most Severe Injury"):
-        input_data = np.array([[traffic_control_device,weather_condition,alignment,roadway_surface_cond,crash_type,intersection_related_i,prim_contributory_cause,num_units,total_fatal_injuries,total_non_fatal_injuries]])
+    if st.button("Predict Most Severe Injury"):
+        input_data = np.array([[tcd.index(traffic_control_device),wc.index(weather_condition),fct.index(first_crash_type),rsc.index(roadway_surface_cond),rd.index(road_defect),ir.index(intersection_related_i),num_units,crash_hour,days.index(crash_day),month.index(crash_month),total_non_fatal_injuries]])
+        
+        array_escalado = scaler.fit_transform(input_data)
+
+        st.write("x",input_data)
+        st.write("x",array_escalado)
         #prediction = model.predict(input_data)[0]
 
         #st.success(f"🏡 El precio predicho de la casa es: **${prediction * 1000:.2f} USD**")
