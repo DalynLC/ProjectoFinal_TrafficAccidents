@@ -4,10 +4,14 @@ import datetime as dt
 import numpy as np
 from pickle import load
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
 
-scaler = MinMaxScaler()
+
+#scaler = MinMaxScaler()
+scaler = StandardScaler()
 #carga el modelo
-#model = load(open("../src/model_classifier.sav", "rb"))
+model = load(open("../src/model_classifier.sav", "rb"))
 
 page_element="""
 <style>
@@ -78,13 +82,25 @@ with st.container(border=True):
 with st.container(border=True):
     if st.button("Predict Most Severe Injury"):
         input_data = np.array([[tcd.index(traffic_control_device),wc.index(weather_condition),fct.index(first_crash_type),rsc.index(roadway_surface_cond),rd.index(road_defect),ir.index(intersection_related_i),num_units,crash_hour,days.index(crash_day),month.index(crash_month),total_non_fatal_injuries]])
-        
+        input_data = pd.DataFrame(input_data, columns=['traffic_control_device', 'weather_condition', 'first_crash_type',
+       'roadway_surface_cond', 'road_defect', 'intersection_related_i',
+       'num_units', 'crash_hour', 'crash_day_of_week', 'crash_month',
+       'total_non_fatal_injuries'])
         array_escalado = scaler.fit_transform(input_data)
 
-        st.write("x",input_data)
-        st.write("x",array_escalado)
-        #prediction = model.predict(input_data)[0]
+        #st.write("x",input_data)
+        prediction = model.predict(input_data)[0]
+        pred = ''
+        
+        if prediction == 0:
+            pred = 'NO INDICATION OF INJURY'
+        elif prediction == 1:
+            pred = 'NONINCAPACITATING INJURY'
+        elif prediction == 2:
+            pred = 'INCAPACITATING INJURY'
+        elif prediction == 3:
+            pred = 'REPORTED, NOT EVIDENT'
 
-        #st.success(f"🏡 El precio predicho de la casa es: **${prediction * 1000:.2f} USD**")
+        st.success(f"🏡 La herida más grave en este accidente será {pred}")
 
 
