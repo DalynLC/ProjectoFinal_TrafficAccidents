@@ -19,3 +19,4 @@ streamlit>=1.43.1
 streamlit_lottie
 imblearn>=3.5.0
 dotenv>=0.9.9
+sqlite3
