@@ -119,6 +119,6 @@ with st.container(border=True):
         elif prediction == 3:
             pred = 'REPORTED, NOT EVIDENT'
 
-        st.success(f"🏡 La herida más grave en este accidente será {pred}")
+        st.success(f"🏡 Most severe injury will be {pred}")
 
 
