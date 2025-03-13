@@ -16,7 +16,7 @@ model = load(open("../src/model_classifier.sav", "rb"))
 page_element="""
 <style>
 [data-testid="stAppViewContainer"]{
-  background-image: url("https://www.mapfre.com.mx/media/545x257_087_autoTurista_noticias_carrilRapido.jpg");
+  background-image: url("https://png.pngtree.com/background/20230426/original/pngtree-city-wide-night-traffic-in-the-midst-of-a-city-picture-image_2490599.jpg");
   background-size: cover;
 }
 .my-container {
