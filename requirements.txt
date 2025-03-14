@@ -14,14 +14,10 @@ sqlalchemy>=1.4.37
 sympy>=1.10.1
 xgboost
 kaggle>=1.6.17
-kagglehub>=0.3.10
+kagglehub
 streamlit>=1.43.1
 streamlit_lottie
-<<<<<<< HEAD
-imblearn>=3.5.0
-dotenv>=0.9.9
+dotenv
 sqlite3
-=======
 imblearn
-dotenv>=0.9.9
->>>>>>> 483a792b7dc2095ea4147b6c29cbe87c362a2891
+kagglehub[pandas-datasets]
