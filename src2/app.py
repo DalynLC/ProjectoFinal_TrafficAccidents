@@ -26,13 +26,13 @@ page_element="""
 }
 </style>
 """
-st.set_page_config(page_title="Predictor de Accidentes de Tráfico", page_icon=":oncoming_automobile:", layout="wide")
+st.set_page_config(page_title="Traffic Accident Injury Prediction", page_icon=":oncoming_automobile:", layout="wide")
 st.markdown(page_element, unsafe_allow_html=True)
 
 with st.container():
-    st.title(":blue_car: Predictor de Lesiones en Accidentes de Tráfico :car:",)
+    st.title(":blue_car: Traffic Accident Injury Prediction :car:",)
     
-    st.write("Esta aplicación permite predecir la gravedad de las heridas en un accidente de tráfico.")
+    st.write("This app allows to predict the severity of the injuries in a traffic accident.")
 
 
 with st.container():
@@ -65,7 +65,7 @@ with st.container(border=True):
         crash_hour = st.selectbox('Time',[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24])
 
 with st.container(border=True):
-    st.subheader("🔍 Ingresa las condiciones del accidente")
+    st.subheader("🔍 Submit the conditions of the accident")
     col1, col2 = st.columns(2)
     with col1:
         traffic_control_device = st.selectbox('Select Traffic Device',tcd)
